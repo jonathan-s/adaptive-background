@@ -137,7 +137,7 @@ elements.forEach(el => {
       img = useCSSBackground() ? getCSSBackground() : el;
     }
 
-    const colors = await analyze(img, {
+    const colors = await analyze(img.src, {
       ignore: DEFAULTS.exclude
     });
 
