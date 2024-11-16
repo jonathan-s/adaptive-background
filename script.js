@@ -118,7 +118,7 @@ elements.forEach(el => {
     )
 
     let transparent  = (
-      parseInt(el.getAttribute("data-ab-transparent"))
+      parseFloat(el.getAttribute("data-ab-transparent"))
       || DEFAULTS.transparent
     )
 
