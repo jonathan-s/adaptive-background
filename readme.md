@@ -2,6 +2,8 @@
 
 A JavaScript script to analyze the dominant color of an image and apply it to the background of its parent element, with various customization options.
 
+This script is an adaption of [jquery.adaptive-backgrounds.js](https://github.com/briangonzalez/jquery.adaptive-backgrounds.js/) and removes the necessity of jquery. This script is purely using vanilla javascript.
+
 ### Installation
 
 Simply include the script in your HTML file:
