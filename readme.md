@@ -28,7 +28,7 @@ Customize the behavior of the script using `data-ab-*` attributes:
 - `data-ab-normalized-light`: Custom light text color.
 - `data-ab-normalized-dark`: Custom dark text color.
 - `data-ab-shade-percentage`: Percentage to shade the background color.
-- `data-ab-shade-variation`: Enable or disable shade variation.
+- `data-ab-shade-variation`: The following values. blend | true | false. Enabling shade variation, blending or disabling (default).
 - `data-ab-shade-dark`: Custom dark shade color.
 - `data-ab-shade-light`: Custom light shade color.
 - `data-ab-transparent`: Set transparency for the background color.

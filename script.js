@@ -77,7 +77,13 @@ const DEFAULTS = {
   transparent: null
 };
 
-
+const parseShadeVariation = (variation) => {
+    try {
+      return JSON.parse(variation)
+    } catch {
+      return variation
+    }
+}
 
 const elements = document.querySelectorAll(DEFAULTS.selector);
 elements.forEach(el => {
@@ -103,17 +109,17 @@ elements.forEach(el => {
     )
 
     let shadeVariation  = (
-      parseInt(el.getAttribute("data-ab-shade-variation"))
+      parseShadeVariation(el.getAttribute("data-ab-shade-variation"))
       || DEFAULTS.shadeVariation
     )
 
     let shadeDark  = (
-      parseInt(el.getAttribute("data-ab-shade-dark"))
+      el.getAttribute("data-ab-shade-dark")
       || DEFAULTS.shadeColors.dark
     )
 
     let shadeLight  = (
-      parseInt(el.getAttribute("data-ab-shade-light"))
+      el.getAttribute("data-ab-shade-light")
       || DEFAULTS.shadeColors.light
     )
 
@@ -170,11 +176,11 @@ elements.forEach(el => {
     return ((rgb[0] * 299) + (rgb[1] * 587) + (rgb[2] * 114)) / 1000;
   };
 
-  const getShadeAdjustment = color => {
-    if (DEFAULTS.shadeVariation === true) {
-      return getYIQ(color) <= 128 ? shadeRGBColor(color, DEFAULTS.shadePercentage) : shadeRGBColor(color, -(DEFAULTS.shadePercentage));
-    } else if (DEFAULTS.shadeVariation === BLEND) {
-      return getYIQ(color) >= 128 ? blendRGBColors(color, DEFAULTS.shadeColors.dark, DEFAULTS.shadePercentage) : blendRGBColors(color, DEFAULTS.shadeColors.light, DEFAULTS.shadePercentage);
+  const getShadeAdjustment = (color, settings) => {
+    if (settings.shadeVariation === true) {
+      return getYIQ(color) <= 128 ? shadeRGBColor(color, settings.shadePercentage) : shadeRGBColor(color, -(settings.shadePercentage));
+    } else if (settings.shadeVariation === BLEND) {
+      return getYIQ(color) >= 128 ? blendRGBColors(color, settings.shadeColors.dark, settings.shadePercentage) : blendRGBColors(color, settings.shadeColors.light, settings.shadePercentage);
     }
   };
 
@@ -196,10 +202,10 @@ elements.forEach(el => {
     parent.classList.add('ab-transition');
 
     if (data.shadeVariation)
-      data.color = getShadeAdjustment(data.color);
+      data.color = getShadeAdjustment(data.color, data);
 
     if (data.transparent && data.transparent >= 0.01 && data.transparent <= 0.99) {
-      const dominantColor = data.color.replace("rgb", "rgba").replace(")", `, ${DEFAULTS.transparent})`);
+      const dominantColor = data.color.replace("rgb", "rgba").replace(")", `, ${data.transparent})`);
       parent.style.backgroundColor = dominantColor;
     } else {
       parent.style.backgroundColor = data.color;
